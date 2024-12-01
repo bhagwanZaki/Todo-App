@@ -142,8 +142,13 @@ class _LoginScreenState extends State<LoginScreen> {
                           return loadingBtn();
                         case Status.DONE:
                           WidgetsBinding.instance.addPostFrameCallback(
-                            (_) => Navigator.pushNamedAndRemoveUntil(
-                                context, Routes.mainScreen, (route) => false),
+                            (_) {
+                              if (apiCompleted) {
+                                Navigator.pushNamedAndRemoveUntil(context,
+                                    Routes.mainScreen, (route) => false);
+                                apiCompleted = false;
+                              }
+                            },
                           );
                           return loginBtn();
                         case Status.ERROR:

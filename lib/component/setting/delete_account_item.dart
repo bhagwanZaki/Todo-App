@@ -260,15 +260,18 @@ class _DeleteAccountItemState extends State<DeleteAccountItem> {
                                   case Status.LOADING:
                                     return loadingBtn();
                                   case Status.DONE:
-                                    WidgetsBinding.instance
-                                        .addPostFrameCallback(
-                                      (_) {
-                                        Navigator.pushNamedAndRemoveUntil(
-                                            context,
-                                            Routes.loginScreen,
-                                            (route) => false);
-                                      },
-                                    );
+                                    if (apiCallDone) {
+                                      WidgetsBinding.instance
+                                          .addPostFrameCallback(
+                                        (_) {
+                                          Navigator.pushNamedAndRemoveUntil(
+                                              context,
+                                              Routes.loginScreen,
+                                              (route) => false);
+                                        },
+                                      );
+                                      apiCallDone = false;
+                                    }
                                     return deleteBtn(context);
                                   case Status.ERROR:
                                     apiCallDone

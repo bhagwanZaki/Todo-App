@@ -1,5 +1,5 @@
 class ApiRoutes {
-  static String baseURL = "http://192.168.56.1:8000/api/";
+  static String baseURL = "http://192.168.0.157:8000/api/";
   // auth apis
   static String checkAuthApi = '${baseURL}auth/checkauth';
   static String loginApi = '${baseURL}auth/login';

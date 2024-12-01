@@ -56,7 +56,7 @@ dynamic returnResponse(http.Response response) {
       throw FetchDataException("Page not found");
     case 500:
     default:
-      throw FetchDataException(
-          'Error occured while Communication with Server with StatusCode : ${response.statusCode}');
+      var responseJson = json.decode(response.body.toString());
+      throw FetchDataException(capitalize(responseJson['message']));
   }
 }

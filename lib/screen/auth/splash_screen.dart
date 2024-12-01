@@ -64,7 +64,8 @@ class _SplashScreenState extends State<SplashScreen> {
                       });
                       break;
                     case Status.ERROR:
-                      if (snapshot.data?.msg == "Invalid authorization") {
+                      if (snapshot.data?.msg == "Invalid authorization" ||
+                          snapshot.data?.msg == "No token found") {
                         WidgetsBinding.instance.addPostFrameCallback((_) async {
                           Navigator.pushNamedAndRemoveUntil(
                               context, Routes.loginScreen, (route) => false);
@@ -72,7 +73,8 @@ class _SplashScreenState extends State<SplashScreen> {
                         break;
                       } else {
                         return ElevatedButton(
-                            onPressed: () => _authStream?.checkAuth(context.read<AuthProvider>()),
+                            onPressed: () => _authStream
+                                ?.checkAuth(context.read<AuthProvider>()),
                             child: Text("Retry"));
                       }
                     default:
