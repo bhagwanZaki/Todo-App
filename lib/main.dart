@@ -4,6 +4,10 @@ import 'package:todo/provier/auth_provider.dart';
 import 'package:todo/provier/todo_provider.dart';
 import 'package:todo/screen/auth/login_screen.dart';
 import 'package:todo/screen/auth/register_screen.dart';
+import 'package:todo/screen/profile/about/about_page.dart';
+import 'package:todo/screen/profile/about/feedback_page.dart';
+import 'package:todo/screen/profile/about/privacy_policy_screen.dart';
+import 'package:todo/screen/profile/about/term_and_condition_screen.dart';
 import 'package:todo/screen/profile/setting_screen.dart';
 import 'package:todo/screen/main/todo_list_screen.dart';
 import 'package:todo/screen/password/forget_password_screen.dart';
@@ -54,6 +58,12 @@ class MyApp extends StatelessWidget {
                 const ForgetPasswordScreen(),
             Routes.verifyPasswordScreen: (context) =>
                 const VerifyPasswordScreen(),
+            Routes.aboutScreen: (context) => const AboutPage(),
+            Routes.privacyPolicyScreen: (context) =>
+                const PrivacyPolicyScreen(),
+            Routes.termAndConditionScreen: (context) =>
+                const TermAndConditionScreen(),
+            Routes.feedbackScreen: (context) => const FeedbackPage(),
           },
         ),
       ),

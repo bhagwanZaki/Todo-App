@@ -172,22 +172,33 @@ class _TodoListScreenState extends State<TodoListScreen> {
                           color: AppColor.blue,
                         );
                       case Status.DONE:
-                        return ListView.builder(
-                          physics: NeverScrollableScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: todoList.length,
-                          itemBuilder: (context, index) {
-                            TodoModel data = todoList[index];
-                            return TodoItem(
-                              todoId: data.id,
-                              todo: data,
-                              textFieldController: updateController,
-                              slidabeEnabled: !isEditModeOn,
-                              updateCallback: setSelectedTodoUpdateState,
-                              submitUpdateForm: updateTodoCall,
-                            );
-                          },
-                        );
+                        return todoList.isEmpty
+                            ? Column(
+                                children: [
+                                  Image.asset(
+                                    "asset/images/empty.png",
+                                    width: 300,
+                                    height: 400,
+                                  ),
+                                  Text("No Task, Enjoy your day")
+                                ],
+                              )
+                            : ListView.builder(
+                                physics: NeverScrollableScrollPhysics(),
+                                shrinkWrap: true,
+                                itemCount: todoList.length,
+                                itemBuilder: (context, index) {
+                                  TodoModel data = todoList[index];
+                                  return TodoItem(
+                                    todoId: data.id,
+                                    todo: data,
+                                    textFieldController: updateController,
+                                    slidabeEnabled: !isEditModeOn,
+                                    updateCallback: setSelectedTodoUpdateState,
+                                    submitUpdateForm: updateTodoCall,
+                                  );
+                                },
+                              );
                       case Status.ERROR:
                         return errorComponent(context);
                       default:

@@ -10,4 +10,8 @@ class Routes {
   static String settingScreen = "/settingScreen";
   static String mainScreen = "/mainScreen";
   static String verifyPasswordScreen = "/verifyPasswordScreen";
+  static String aboutScreen = "/aboutScreen";
+  static String privacyPolicyScreen = "/privacyPolicyScreen";
+  static String termAndConditionScreen = "/termAndConditionScreen";
+  static String feedbackScreen = "/feedbackScreen";
 }

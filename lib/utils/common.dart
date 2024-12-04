@@ -53,11 +53,13 @@ class Common {
     }
   }
 
-    static bool isLargeScreen(BuildContext context) {
+  static bool isLargeScreen(BuildContext context) {
+    print("?? Screen width ${MediaQuery.of(context).size.width}");
     return MediaQuery.of(context).size.width > 960.0;
   }
 
   static bool isMediumScreen(BuildContext context) {
+    print("?? Screen width ${MediaQuery.of(context).size.width}");
     return MediaQuery.of(context).size.width > 640.0;
   }
 

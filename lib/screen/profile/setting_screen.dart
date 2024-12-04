@@ -6,7 +6,6 @@ import 'package:todo/provier/auth_provider.dart';
 import 'package:todo/screen/profile/edit_profile.dart';
 import 'package:todo/stream/auth_stream.dart';
 import 'package:todo/theme/app_color.dart';
-import 'package:todo/utils/api_response.dart';
 import 'package:todo/utils/common.dart';
 import 'package:todo/constant/routes.dart';
 import 'package:todo/utils/preferences.dart';
@@ -24,13 +23,6 @@ class _SettingScreenState extends State<SettingScreen> {
   String? username = "";
   String? email = "";
   String? fullname = "";
-  AuthStream? _stream;
-
-  @override
-  void initState() {
-    _stream = AuthStream();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -100,22 +92,29 @@ class _SettingScreenState extends State<SettingScreen> {
             size8(),
             LogoutItem(logoutFromALLdevice: true),
             size8(),
-            DeleteAccountItem(username: username!,email: email!),
+            DeleteAccountItem(username: username!, email: email!),
             size25(),
             const Text("About Us"),
             size15(),
-            settingInkWell(Icons.info_outline, "About Us", () {}),
+            settingInkWell(Icons.info_outline, "About Us",
+                () => Navigator.pushNamed(context, Routes.aboutScreen)),
             size8(),
-            settingInkWell(Icons.help_outline, "Privacy policy", () {}),
+            settingInkWell(Icons.help_outline, "Privacy policy",
+                () => Navigator.pushNamed(context, Routes.privacyPolicyScreen)),
             size8(),
-            settingInkWell(Icons.description, "Term and condition", () {}),
+            settingInkWell(
+                Icons.description,
+                "Term and condition",
+                () => Navigator.pushNamed(
+                    context, Routes.termAndConditionScreen)),
             size8(),
-            settingDoubleRowInkWell(Icons.hive, "Version", "v1.0.0"),
+            settingDoubleRowInkWell(Icons.hive, "Version", "v1.0.0", () {}),
             size8(),
             settingDoubleRowInkWell(
                 Icons.thumb_up_alt_outlined,
                 "Leave Feedback",
-                "Let us know how you like the app or report any bug"),
+                "Let us know how you like the app or report any bug",
+                () => Navigator.pushNamed(context, Routes.feedbackScreen)),
             size25()
           ],
         ),
@@ -202,10 +201,11 @@ class _SettingScreenState extends State<SettingScreen> {
     );
   }
 
-  InkWell settingDoubleRowInkWell(IconData icon, String text, String subText,
+  InkWell settingDoubleRowInkWell(
+      IconData icon, String text, String subText, Function onTap,
       {Color iconColor = AppColor.white, Color textColor = AppColor.white}) {
     return InkWell(
-      onTap: () {},
+      onTap: () => onTap(),
       borderRadius: BorderRadius.circular(9),
       child: Ink(
         padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
