@@ -2,9 +2,12 @@ import 'dart:io';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:todo/constant/routes.dart';
+import 'package:todo/stream/feedback_stream.dart';
 import 'package:todo/theme/app_color.dart';
+import 'package:todo/utils/api_response.dart';
 import 'package:todo/utils/common.dart';
 
 class FeedbackPage extends StatefulWidget {
@@ -15,10 +18,20 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
-  TextEditingController _editTextController = TextEditingController();
-  ScrollController _scrollController = ScrollController();
+  FeedbackStream? _feedbackStream;
+
+  TextEditingController editTextController = TextEditingController();
+  ScrollController scrollController = ScrollController();
+
   File? uploadedImage;
   bool isImageSelected = false;
+  bool apiCallDone = false;
+
+  @override
+  void initState() {
+    _feedbackStream = FeedbackStream();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -63,26 +76,39 @@ class _FeedbackPageState extends State<FeedbackPage> {
             const SizedBox(
               height: 8,
             ),
-            MaterialButton(
-              minWidth: double.infinity,
-              color: AppColor.blue,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(50)),
-              onPressed: () {},
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  "Submit",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    height: 0,
-                    fontSize: 20,
-                    color: AppColor.black,
-                    fontWeight: FontWeight.w400,
-                  ),
-                ),
-              ),
-            )
+            StreamBuilder<ApiResponse<bool>>(
+              stream: _feedbackStream?.feedbackStream,
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  switch (snapshot.data?.status) {
+                    case Status.LOADING:
+                      return loadingBtn();
+                    case Status.DONE:
+                      apiCallDone
+                          ? WidgetsBinding.instance.addPostFrameCallback(
+                              (_) => Navigator.pop(context),
+                            )
+                          : null;
+                      apiCallDone = false;
+                      return submitBtn();
+                    case Status.ERROR:
+                      apiCallDone
+                          ? Fluttertoast.showToast(
+                              msg: snapshot.data!.msg,
+                              toastLength: Toast.LENGTH_SHORT,
+                              backgroundColor: AppColor.red,
+                              textColor: AppColor.white,
+                            )
+                          : null;
+                      apiCallDone = false;
+                      return submitBtn();
+                    default:
+                      return submitBtn();
+                  }
+                }
+                return submitBtn();
+              },
+            ),
           ],
         ),
       ),
@@ -152,9 +178,9 @@ class _FeedbackPageState extends State<FeedbackPage> {
                         : SizedBox(),
                     Expanded(
                       child: Scrollbar(
-                        controller: _scrollController,
+                        controller: scrollController,
                         child: TextFormField(
-                          controller: _editTextController,
+                          controller: editTextController,
                           maxLines: 10,
                           decoration: InputDecoration(
                               hintText: "How can we make app even better?",
@@ -216,6 +242,48 @@ class _FeedbackPageState extends State<FeedbackPage> {
               ],
             ),
           )),
+    );
+  }
+
+  MaterialButton submitBtn() {
+    return MaterialButton(
+      minWidth: double.infinity,
+      color: AppColor.blue,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      onPressed: () {
+        _feedbackStream?.createFeedback(
+            uploadedImage!, editTextController.text);
+
+        apiCallDone = true;
+      },
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: Text(
+          "Submit",
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            height: 0,
+            fontSize: 20,
+            color: AppColor.black,
+            fontWeight: FontWeight.w400,
+          ),
+        ),
+      ),
+    );
+  }
+
+  MaterialButton loadingBtn() {
+    return MaterialButton(
+      minWidth: double.infinity,
+      color: AppColor.blue,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(50)),
+      onPressed: () {},
+      child: Padding(
+        padding: const EdgeInsets.all(12.0),
+        child: CircularProgressIndicator(
+          color: AppColor.black,
+        ),
+      ),
     );
   }
 

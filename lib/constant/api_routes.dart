@@ -22,5 +22,7 @@ class ApiRoutes {
   static String createTodoApi = '${baseURL}add';
   static String updateTodoApi = '${baseURL}update/';
   static String deleteTodoApi = '${baseURL}delete/';
+
+  // feedback apis
+  static String feedbackApi = '${baseURL}feedback/create';
 }
-  

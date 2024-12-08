@@ -4,7 +4,6 @@ import 'package:todo/component/setting/delete_account_item.dart';
 import 'package:todo/component/setting/logout_item.dart';
 import 'package:todo/provier/auth_provider.dart';
 import 'package:todo/screen/profile/edit_profile.dart';
-import 'package:todo/stream/auth_stream.dart';
 import 'package:todo/theme/app_color.dart';
 import 'package:todo/utils/common.dart';
 import 'package:todo/constant/routes.dart';

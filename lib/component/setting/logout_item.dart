@@ -112,7 +112,6 @@ class _LogoutItemState extends State<LogoutItem> {
             }
           },
         );
-        ;
       },
       borderRadius: BorderRadius.circular(9),
       child: Ink(

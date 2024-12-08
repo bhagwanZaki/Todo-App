@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:todo/component/setting/logout_item.dart';
 import 'package:todo/constant/enums.dart';
 import 'package:todo/constant/routes.dart';
 import 'package:todo/provier/auth_provider.dart';

@@ -3,7 +3,6 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
 import 'package:todo/constant/routes.dart';
 import 'package:todo/provier/auth_provider.dart';
-import 'package:todo/screen/password/reset_password_screen.dart';
 import 'package:todo/screen/password/verify_otp_screen.dart';
 import 'package:todo/stream/auth_stream.dart';
 import 'package:todo/theme/app_color.dart';
