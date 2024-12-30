@@ -1,5 +1,6 @@
 class ApiRoutes {
-  static String baseURL = "http://192.168.0.157:8000/api/";
+  // static String baseURL = "http://192.168.100.122:8000/api/";
+  static String baseURL = "https://todo-production-0151.up.railway.app/api/";
   // auth apis
   static String checkAuthApi = '${baseURL}auth/checkauth';
   static String loginApi = '${baseURL}auth/login';

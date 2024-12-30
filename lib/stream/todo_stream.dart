@@ -73,7 +73,6 @@ class TodoStream {
   }
 
   disposeDeleteStream() {
-    deleteSink.add(ApiResponse.active());
     _deleteController.close();
   }
 

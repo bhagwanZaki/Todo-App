@@ -43,6 +43,7 @@ class AuthStream {
       var data = await _authService.isAuthApi(provider);
       authSink.add(ApiResponse.completed(data));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       authSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -53,6 +54,7 @@ class AuthStream {
       var data = await _authService.loginApi(provider, username, password);
       authSink.add(ApiResponse.completed(data));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       authSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -64,6 +66,7 @@ class AuthStream {
           await _authService.registerApi(username, email);
       verifyEmailSink.add(ApiResponse.completed(data));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       verifyEmailSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -88,6 +91,7 @@ class AuthStream {
       );
       authSink.add(ApiResponse.completed(data));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       authSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -101,6 +105,7 @@ class AuthStream {
       bool status = await _authService.deleteUserApi(otp, provider);
       boolSink.add(ApiResponse.completed(status));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       boolSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -111,6 +116,7 @@ class AuthStream {
       bool status = await _authService.logoutApi(provider, allDeviceLogout);
       boolSink.add(ApiResponse.completed(status));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       boolSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -121,6 +127,7 @@ class AuthStream {
       bool status = await _authService.otpRequestApi(email, requestType);
       boolSink.add(ApiResponse.completed(status));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       boolSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -131,6 +138,7 @@ class AuthStream {
       bool status = await _authService.verifyOtpApi(email, otp, requestType);
       boolSink.add(ApiResponse.completed(status));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       boolSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -142,6 +150,7 @@ class AuthStream {
           await _authService.resetPasswordRequestApi(username, password);
       boolSink.add(ApiResponse.completed(status));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       boolSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -152,6 +161,7 @@ class AuthStream {
       bool status = await _authService.resetPassowordApi(email, password);
       boolSink.add(ApiResponse.completed(status));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       boolSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -162,6 +172,7 @@ class AuthStream {
       bool status = await _authService.forgetPassowordApi(email, password);
       boolSink.add(ApiResponse.completed(status));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       boolSink.add(ApiResponse.error(e.toString()));
     }
   }
@@ -174,6 +185,7 @@ class AuthStream {
           await _authService.updateProfileService(provider, profileRes);
       authSink.add(ApiResponse.completed(user));
     } catch (e) {
+      print("ERROR : ${e.toString()}");
       authSink.add(ApiResponse.error(e.toString()));
     }
   }

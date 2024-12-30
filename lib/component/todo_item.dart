@@ -37,6 +37,7 @@ class _TodoItemState extends State<TodoItem> {
 
   bool editMode = false;
   bool showToast = true;
+  bool isDeleteApiCompleted = false;
 
   @override
   void initState() {
@@ -281,17 +282,22 @@ class _TodoItemState extends State<TodoItem> {
             case Status.DONE:
               WidgetsBinding.instance.addPostFrameCallback(
                 (_) {
-                  Navigator.pop(context);
-                  _deleteStream?.disposeDeleteStream();
+                  if (isDeleteApiCompleted) {
+                    Navigator.pop(context);
+                    _deleteStream?.disposeDeleteStream();
+                    isDeleteApiCompleted = false;
+                  }
                 },
               );
               return deleteBtn(context);
             case Status.ERROR:
-              Fluttertoast.showToast(
-                  msg: snapshot.data!.msg,
-                  toastLength: Toast.LENGTH_SHORT,
-                  backgroundColor: AppColor.red,
-                  textColor: AppColor.white);
+              isDeleteApiCompleted
+                  ? Fluttertoast.showToast(
+                      msg: snapshot.data!.msg,
+                      toastLength: Toast.LENGTH_SHORT,
+                      backgroundColor: AppColor.red,
+                      textColor: AppColor.white)
+                  : null;
               return deleteBtn(context);
             default:
               break;
@@ -307,7 +313,9 @@ class _TodoItemState extends State<TodoItem> {
       elevation: 0,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
       onPressed: () {
-        _deleteStream?.deleteTodoList(context.read<TodoProvider>(), widget.todoId);
+        _deleteStream?.deleteTodoList(
+            context.read<TodoProvider>(), widget.todoId);
+        isDeleteApiCompleted = true;
       },
       color: AppColor.red,
       child: Text("Delete"),
